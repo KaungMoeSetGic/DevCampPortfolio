@@ -5,9 +5,18 @@
 <div id="blogs">
   <% @blogs.each do |blog| %>
     <%= render blog %>
-    <p>
-      <%= link_to "Show this blog", blog %>
-    </p>
+    <div style="display: flex; align-items: center;">
+      <p>
+        <%= link_to "Show this blog", blog %>
+      </p>
+      <p>
+        <%= link_to "Edit this blog", edit_blog_path(blog) %>
+      </p>
+      <p>
+        <%= button_to "Delete this blog", blog, method: :delete, onclick: "return confirm('Are you sure?');" %>
+      </p>
+    </div>
+    <hr>
   <% end %>
 </div>
 
