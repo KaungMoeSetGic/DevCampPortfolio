@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @page_title %></title>
+    <meta name="keywords" content="<%= @seo_keywords %>">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "portfolios", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div>
+      <%= link_to "Home", root_path %>
+      <%= link_to "About", about_path %>
+      <%= link_to "Contact", contact_path %>
+      <%= link_to "Blog", blogs_path %>
+      <%= link_to "Portfolio", portfolios_path %>
+    </div>
+
+    <div>
+      <% if current_user.is_a?(User) %>
+          <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+      <% else %>
+          <%= link_to "Register", new_user_registration_path %>
+          <%= link_to "Login", new_user_session_path %>
+      <% end %>
+    </div>
+
+    <%= yield %>
+
+    <% if session[:source] %>
+      <p>Thanks for visiting me from <%= session[:source] %></p>
+    <% end %>
+  </body>
+</html>
