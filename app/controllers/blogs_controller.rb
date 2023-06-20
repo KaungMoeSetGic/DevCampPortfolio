@@ -29,12 +29,9 @@ class BlogsController < ApplicationController
 
     respond_to do |format|
       if @blog.save
-        # format.html { redirect_to blog_url(@blog), notice: "Blog was successfully created." }
         format.html { redirect_to @blog, notice: "Blog was successfully created." }
-        # format.json { render :show, status: :created, location: @blog }
       else
         format.html { render :new, status: :unprocessable_entity }
-        # format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -80,6 +77,6 @@ class BlogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def blog_params
-      params.require(:blog).permit(:title, :body)
+      params.require(:blog).permit(:title, :body, :topic_id)
     end
 end
