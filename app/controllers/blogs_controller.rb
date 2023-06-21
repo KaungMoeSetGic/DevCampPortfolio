@@ -1,13 +1,18 @@
 class BlogsController < ApplicationController
   before_action :set_blog, only: %i[ show edit update destroy toggle_status ]
-
+  layout "blog" # can write layout("blog")
   # GET /blogs or /blogs.json
+  
   def index
-    @blogs = Blog.all
+    # byebug
+    @blogs = Blog.special_blogs
+    @page_title = "My Portfolio Blog"
   end
 
   # GET /blogs/1 or /blogs/1.json
   def show
+    @page_title = @blog.title
+    @seo_keywords = @blog.body
   end
 
   # GET /blogs/new
@@ -25,12 +30,9 @@ class BlogsController < ApplicationController
 
     respond_to do |format|
       if @blog.save
-        # format.html { redirect_to blog_url(@blog), notice: "Blog was successfully created." }
         format.html { redirect_to @blog, notice: "Blog was successfully created." }
-        # format.json { render :show, status: :created, location: @blog }
       else
         format.html { render :new, status: :unprocessable_entity }
-        # format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,6 +78,6 @@ class BlogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def blog_params
-      params.require(:blog).permit(:title, :body)
+      params.require(:blog).permit(:title, :body, :topic_id)
     end
 end
